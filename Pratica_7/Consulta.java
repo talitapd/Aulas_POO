@@ -3,9 +3,7 @@ package Pratica_7;
 import java.sql.*;
 
 public class Consulta {
-    //Criar uma classe para realizar as seguintes consultas na tabela Livro:
-    // a. Buscar um livro pelo título, considerando o início do texto buscado
-    // b. Buscar um livro cujo vl_preco seja maior ou igual a um valor digitado.
+   
     private final String url = "jdbc:postgresql://localhost/BDlivrariaUniversitaria";
     private final String user = "postgres";
     private final String password = "123456";
@@ -16,17 +14,13 @@ public class Consulta {
     public void BuscaTitulo(String titulo) throws SQLException {
         System.out.println(QUERY_TITULO);
 
-        // Step 1: Establishing a Connection
         try (Connection connection = DriverManager.getConnection(url, user, password);
 
-             // Step 2:Create a statement using connection object
              PreparedStatement preparedStatement = connection.prepareStatement(QUERY_TITULO);) {
             titulo=titulo + "%";
             preparedStatement.setString(1, titulo);
-            // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
 
-            // Step 4: Process the ResultSet object.
             while (rs.next()) {
                 String id = rs.getString("id_isbn");
                 String name_titulo = rs.getString("nm_titulo");
@@ -34,7 +28,6 @@ public class Consulta {
             }
         } catch (SQLException e) {
 
-            // print SQL exception information
             printSQLException(e);
         }
     }
@@ -43,16 +36,12 @@ public class Consulta {
     public void BuscaValor(Double valor) throws SQLException {
         System.out.println(QUERY_VALOR);
 
-        // Step 1: Establishing a Connection
         try (Connection connection = DriverManager.getConnection(url, user, password);
 
-             // Step 2:Create a statement using connection object
              PreparedStatement preparedStatement = connection.prepareStatement(QUERY_VALOR);) {
             preparedStatement.setDouble(1, valor);
-            // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
 
-            // Step 4: Process the ResultSet object.
             while (rs.next()) {
                 String id = rs.getString("id_isbn");
                 String name_titulo = rs.getString("nm_titulo");
@@ -61,7 +50,6 @@ public class Consulta {
             }
         } catch (SQLException e) {
 
-            // print SQL exception information
             printSQLException(e);
         }
     }
